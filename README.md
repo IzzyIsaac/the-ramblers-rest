@@ -1,0 +1,1 @@
+# Rambler’s Rest – starter\n\nSplit HTML/CSS/JS scaffold. Put images in assets/images.\n
