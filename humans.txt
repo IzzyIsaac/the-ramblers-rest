@@ -1,0 +1,6 @@
+/* The Rambler’s Rest — humans.txt */
+Site: https://theramblersrest.com
+Purpose: Simple splash site for our Airbnb home
+Made by: WILD RAMBLERS
+Location: Pigeon Forge, TN
+Note: Thanks for visiting the source. Be kind & enjoy the woods. LEAVENOTRACE 🌲
