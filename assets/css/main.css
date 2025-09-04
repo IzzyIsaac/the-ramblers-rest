@@ -109,4 +109,23 @@ section{ padding: 56px 0; }
   outline: 2px solid #fff;
   outline-offset: 2px;
 }
+/* Universal button hover: subtle lift + glow, keep original colors */
+.btn {
+  transition: transform .18s ease, box-shadow .18s ease, filter .18s ease;
+}
+
+.btn:hover,
+.btn:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,.22);
+  filter: brightness(1.04); /* light “highlight”, keeps color tone */
+}
+
+.btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(0,0,0,.20);
+}
+
+/* good keyboard outline */
+.btn:focus-visible { outline: 2px solid rgba(255,255,255,.9); outline-offset: 2px; }
 
