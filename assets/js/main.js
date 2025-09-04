@@ -55,11 +55,32 @@
       });
     });
 
-    // 5) Track gallery image clicks by filename
+    // 5) Lightbox for gallery images & track clicks
+    const lightbox = document.getElementById("lightbox");
+    const closeLightbox = () => {
+      if (!lightbox) return;
+      lightbox.classList.add("hidden");
+      lightbox.innerHTML = "";
+      document.body.style.overflow = "";
+    };
+    if (lightbox) {
+      lightbox.addEventListener("click", (e) => {
+        if (e.target === lightbox) closeLightbox();
+      });
+    }
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeLightbox();
+    });
+
     document.querySelectorAll("#gallery .grid-photos img").forEach((img) => {
       img.addEventListener("click", () => {
         const file = (img.currentSrc || img.src || "").split("/").pop() || "";
         track("gallery_click", { image: file.toLowerCase() });
+        if (lightbox) {
+          lightbox.innerHTML = `<img src="${img.currentSrc || img.src}" alt="${img.alt}">`;
+          lightbox.classList.remove("hidden");
+          document.body.style.overflow = "hidden";
+        }
       });
     });
   });

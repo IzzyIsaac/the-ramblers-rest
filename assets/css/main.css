@@ -35,7 +35,12 @@ section{ padding: 56px 0; }
 /* Gallery */
 .gallery{ background:#22302a; color:#e7ece8; }
 .grid-photos{ display:grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap:12px; }
-.grid-photos img{ width:100%; height:230px; object-fit:cover; display:block; border-radius:12px; }
+.grid-photos img{ width:100%; height:230px; object-fit:cover; display:block; border-radius:12px; transition:transform .2s ease; cursor:pointer; }
+.grid-photos img:hover{ transform:scale(1.05); }
+
+.lightbox{ position:fixed; inset:0; background:rgba(0,0,0,.6); backdrop-filter:blur(4px); display:flex; align-items:center; justify-content:center; z-index:1000; }
+.lightbox.hidden{ display:none; }
+.lightbox img{ max-width:90vw; max-height:90vh; border-radius:12px; }
 
 /* Amenities */
 .amenities{ background:#f6f7f5; }
