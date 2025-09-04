@@ -73,9 +73,26 @@ section{ padding: 56px 0; }
 .cta .lead{ color:#e8eee9; }
 
 /* Position hero copy lower on the image */
-.hero .hero-content {           /* phones */
-  transform: translateY(12vh);
+/* Mobile-only: drop the hero copy lower */
+@media (max-width: 767px) {
+  .hero .hero-content {
+    transform: translateY(28vh); /* try 26–32vh until it sits between TV and table */
+  }
+
+  /* (optional) tame size/wrap on very narrow phones */
+  .hero .tagline.tagline--big {
+    max-width: 26ch;
+    /* Uncomment to make a touch smaller on tiny screens
+    font-size: clamp(1.1rem, 5.2vw + 0.1rem, 1.6rem);
+    */
+  }
 }
+
+/* Extra tiny phones (e.g., 360px wide) */
+@media (max-width: 375px) {
+  .hero .hero-content { transform: translateY(30vh); }
+}
+
 
 @media (min-width: 768px) {     /* tablets */
   .hero .hero-content {
