@@ -72,13 +72,20 @@ section{ padding: 56px 0; }
 .cta{ background:#2f4639; color:#fff; text-align:center; }
 .cta .lead{ color:#e8eee9; }
 
-/* Keep hero copy lower on the image (same spot, just bigger text) */
-.hero .hero-content {
-  transform: translateY(8vh);
+/* Position hero copy lower on the image */
+.hero .hero-content {           /* phones */
+  transform: translateY(12vh);
 }
 
-@media (min-width: 768px) {
+@media (min-width: 768px) {     /* tablets */
   .hero .hero-content {
-    transform: translateY(12vh);
+    transform: translateY(18vh);
   }
 }
+
+@media (min-width: 1024px) {    /* laptops/desktops */
+  .hero .hero-content {
+    transform: translateY(22vh);
+  }
+}
+
