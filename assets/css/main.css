@@ -72,6 +72,17 @@ section{ padding: 56px 0; }
 .cta{ background:#2f4639; color:#fff; text-align:center; }
 .cta .lead{ color:#e8eee9; }
 
+/* NEW: CTA subtext styling */
+.cta-subtext {
+  font-size: 1rem;
+  color: #e8eee9;
+  margin-top: 0.9rem;   /* a bit closer to the header */
+  margin-bottom: 1.4rem; /* a bit more breathing space above the button */
+  line-height: 1.45;
+  max-width: 48ch;
+  margin-left: auto;
+  margin-right: auto;
+
 /* Hero copy offsets */
 @media (max-width: 767px) {      /* phones */
   .hero .hero-content { transform: translateY(28vh); }
