@@ -142,3 +142,30 @@ section{ padding: 56px 0; }
 
 /* good keyboard outline */
 .btn:focus-visible { outline: 2px solid rgba(255,255,255,.9); outline-offset: 2px; }
+
+/* Text logo styles */
+.site-header .brand {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  text-decoration: none;
+}
+
+.site-header .brand .brand-text {
+  font-family: "Merriweather", serif;
+  font-weight: 900;
+  font-size: clamp(1.15rem, 2.2vw + 0.35rem, 1.9rem);
+  line-height: 1.1;
+  letter-spacing: 0.01em;
+  color: #213529; /* deep forest */
+  white-space: nowrap;
+  transform: translateY(-1px); /* tiny optical nudge */
+}
+
+/* Safety: in case an old logo <img> is still around, hide it */
+.site-header .brand img { display: none !important; }
+
+/* Prevent header wrap on very narrow phones */
+@media (max-width: 380px) {
+  .site-header .brand .brand-text { font-size: 1.35rem; }
+}
