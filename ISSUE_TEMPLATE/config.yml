@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: DM us on Instagram (@WILDRAMBLERS)
+    url: https://instagram.com/WILDRAMBLERS
+    about: For questions or issues about the site or our home, send us a quick DM.
+  - name: Book The Rambler’s Rest
+    url: https://airbnb.com/h/theramblersrest
+    about: Booking and property questions belong here.
+  - name: Website note
+    url: https://theramblersrest.com
+    about: Tiny static site; GitHub issues are monitored infrequently.
