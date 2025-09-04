@@ -13,6 +13,17 @@ nav a:hover{color:#2f4639}
 /* spacing for in-page anchors so the sticky header doesn't cover them */
 [id]{ scroll-margin-top: 80px; }
 
+/* Bigger hero tagline */
+.hero .tagline--big {
+  font-size: clamp(1.25rem, 2.6vw + 0.4rem, 2.2rem);
+  font-weight: 700;
+  line-height: 1.25;
+  color: #fff;
+  text-shadow: 0 2px 12px rgba(0,0,0,.55);
+  margin: 0 0 1rem;
+  max-width: 42rem;
+}
+
 /* Sections */
 section{ padding: 56px 0; }
 .section-title{
