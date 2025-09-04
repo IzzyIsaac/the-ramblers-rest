@@ -5,7 +5,7 @@
     console.log(
       "%cThe Rambler’s Rest",
       "color:#2f4639;font-weight:700;font-size:16px",
-      "\nTiny static site, good vibes only. ✌️"
+      "\nThanks for peeking under the hood. Tiny static site, good vibes only. ✌️"
     );
   } catch (_) {}
 
