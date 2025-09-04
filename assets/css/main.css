@@ -24,6 +24,15 @@ nav a:hover{color:#2f4639}
   max-width: 42rem;
 }
 
+/* Hide visually but keep for screen readers/SEO */
+.visually-hidden {
+  position: absolute !important;
+  height: 1px; width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap;
+}
+
 /* Sections */
 section{ padding: 56px 0; }
 .section-title{
