@@ -8,62 +8,62 @@ body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,
    Header / Nav (logo fills the bar)
    ========================= */
 .site-header{
-  /* Controls logo height across breakpoints */
   --logo-h: clamp(52px, 8.5vh, 96px);
-
-  position:sticky; top:0; z-index:100;
+  position:sticky; top:0;
   background:rgba(255,255,255,.75);
   backdrop-filter:blur(6px);
-  padding-block:8px;                 /* even top/bottom padding */
-  border-bottom:0; box-shadow:none;
-  min-height:calc(var(--logo-h) + 16px); /* logo + padding */
+  padding-block:8px;
+  border-bottom:0;
+  box-shadow:none;
+  min-height:calc(var(--logo-h) + 16px);
+  z-index:100;
 }
-
-.nav{
-  display:flex; justify-content:space-between; align-items:center; gap:16px;
-}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:16px}
 
 /* Brand (image logo) */
 .brand{display:flex;align-items:center;gap:12px;text-decoration:none}
-.brand-logo{height:var(--logo-h);width:auto;display:block;transform:translateY(3px)} /* tiny vertical nudge */
-.brand .brand-text{display:none}  /* hide text if old span exists */
-
-/* Tweak logo size on very small / very large screens if desired */
+.brand-logo{height:var(--logo-h);width:auto;display:block}
+.brand .brand-text{display:none}
 @media (max-width:360px){ .site-header{ --logo-h:46px } }
 @media (min-width:1200px){ .site-header{ --logo-h:clamp(64px, 9vh, 110px) } }
 
-/* Nav links (text links) */
+/* Nav links */
 nav a{
-  margin-left:12px; color:#212529; text-decoration:none; font-weight:600; line-height:1;
-  padding-block:6px;
+  margin-left:12px;color:#212529;text-decoration:none;
+  font-weight:600;line-height:1;padding-block:6px;
 }
+nav a:hover{color:#2f4639}
 
-/* ✅ Only recolor NON-button nav links on hover/focus */
-nav a:hover:not(.btn),
-nav a:focus-visible:not(.btn){ color:#2f4639 }
-
-/* Nav pill button — keep text white always */
-nav .btn,
-nav .btn:hover,
-nav .btn:focus-visible{ color:#fff }
+/* “Book Now” button in the nav only */
+.btn--nav{
+  display:inline-block;vertical-align:middle;
+  background:#2f4639;color:#fff;
+  padding:.55rem 1rem;border-radius:999px;font-weight:700;
+  transition:transform .18s ease, box-shadow .18s ease, filter .18s ease;
+}
+.btn--nav:hover,.btn--nav:focus-visible{
+  transform:translateY(-1px);
+  box-shadow:0 6px 16px rgba(0,0,0,.22);
+  filter:brightness(1.05);
+  color:#fff; /* keep text visible */
+}
 
 /* =========================
    Hero
    ========================= */
-.hero{position:relative;text-align:center;color:#fff}
+.hero{position:relative;text-align:center;color:#fff;margin-bottom:0}
 .hero img{width:100%;height:70vh;object-fit:cover;filter:brightness(.6)}
 .hero-content{position:absolute;inset:0;display:grid;place-items:center}
 
 /* =========================
-   Buttons
+   Buttons (global)
    ========================= */
 .btn{
   display:inline-block;background:#2f4639;color:#fff;
   padding:.75rem 1.25rem;border-radius:999px;text-decoration:none;font-weight:700;
   transition:transform .18s ease, box-shadow .18s ease, filter .18s ease;
 }
-.btn:hover,
-.btn:focus-visible{
+.btn:hover,.btn:focus-visible{
   transform:translateY(-2px);
   box-shadow:0 6px 16px rgba(0,0,0,.22);
   filter:brightness(1.04);
@@ -99,14 +99,20 @@ section{padding:56px 0}
 }
 .lead{color:#6b7280;text-align:center;max-width:60ch;margin:0 auto 32px}
 
+/* ===== Mobile fix: hero→About “kicker” button spacing (only) ===== */
+.about-kicker{           /* wrapper div around the Book Now button above About */
+  display:flex; justify-content:center;
+  margin: clamp(18px, 3.6vw, 26px) auto clamp(16px, 3vw, 22px);
+}
+.about-kicker + .section-title{
+  margin-top: clamp(10px, 2.8vw, 18px);   /* ensure title never collides with the button */
+}
+
 /* About */
 .about-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:24px;align-items:center}
 @media (max-width:900px){ .about-grid{grid-template-columns:1fr} }
 .card{background:#f6f7f5;padding:16px;border-radius:14px}
 .card img{width:100%;height:auto;display:block;border-radius:12px}
-
-/* (Removed the negative pull-up that caused overlap) */
-/* #about { margin-top:-24px } */
 
 /* =========================
    Gallery
@@ -129,24 +135,20 @@ section{padding:56px 0}
 .amen-ic{font-size:1.2rem}
 
 /* =========================
-   CTA
+   CTA (bottom section)
    ========================= */
 .cta{background:#2f4639;color:#fff;text-align:center}
 .cta .lead{color:#e8eee9}
-
-/* CTA subtext styling */
 .cta-subtext{
   font-size:1rem;color:#e8eee9;margin-top:1.2rem;margin-bottom:2.2rem;line-height:1.5;
   max-width:48ch;margin-left:auto;margin-right:auto;font-weight:400;opacity:.95
 }
-
 /* CTA button: always-visible brown + hover lift */
 .cta .btn{
   background-color:#8B4513; color:#fff; border:0;
   box-shadow:0 2px 6px rgba(0,0,0,.25);
 }
-.cta .btn:hover,
-.cta .btn:focus-visible{
+.cta .btn:hover,.cta .btn:focus-visible{
   background-color:#A0522D; transform:translateY(-2px);
   box-shadow:0 4px 12px rgba(0,0,0,.30);
 }
