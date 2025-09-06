@@ -1,171 +1,170 @@
-body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,Arial; margin:0; color:#212529}
+/* =========================
+   Base
+   ========================= */
+body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,Arial;margin:0;color:#212529}
 .container{max-width:1120px;margin:0 auto;padding:0 20px}
-.site-header{position:sticky;top:0;background:rgba(255,255,255,.7);backdrop-filter:blur(6px);padding:12px 0;border-bottom:1px solid #e9ecef}
-.nav{display:flex;justify-content:space-between;align-items:center;gap:16px}
-.brand{display:flex;align-items:center;gap:8px;color:#2f4639;text-decoration:none;font-weight:700}
-nav a{margin-left:12px;color:#212529;text-decoration:none;font-weight:600}
-nav a:hover{color:#2f4639}
+
+/* =========================
+   Header / Nav (logo fills the bar)
+   ========================= */
+.site-header{
+  /* Controls logo height across breakpoints */
+  --logo-h: clamp(52px, 8.5vh, 96px);
+
+  position:sticky; top:0; z-index:100;
+  background:rgba(255,255,255,.75);
+  backdrop-filter:blur(6px);
+  padding-block:8px;                 /* even top/bottom padding */
+  border-bottom:0; box-shadow:none;
+  min-height:calc(var(--logo-h) + 16px); /* logo + padding */
+}
+
+.nav{
+  display:flex; justify-content:space-between; align-items:center; gap:16px;
+}
+
+/* Brand (image logo) */
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.brand-logo{height:var(--logo-h);width:auto;display:block;transform:translateY(3px)} /* tiny vertical nudge */
+.brand .brand-text{display:none}  /* hide text if old span exists */
+
+/* Tweak logo size on very small / very large screens if desired */
+@media (max-width:360px){ .site-header{ --logo-h:46px } }
+@media (min-width:1200px){ .site-header{ --logo-h:clamp(64px, 9vh, 110px) } }
+
+/* Nav links (text links) */
+nav a{
+  margin-left:12px; color:#212529; text-decoration:none; font-weight:600; line-height:1;
+  padding-block:6px;
+}
+
+/* ✅ Only recolor NON-button nav links on hover/focus */
+nav a:hover:not(.btn),
+nav a:focus-visible:not(.btn){ color:#2f4639 }
+
+/* Nav pill button — keep text white always */
+nav .btn,
+nav .btn:hover,
+nav .btn:focus-visible{ color:#fff }
+
+/* =========================
+   Hero
+   ========================= */
 .hero{position:relative;text-align:center;color:#fff}
 .hero img{width:100%;height:70vh;object-fit:cover;filter:brightness(.6)}
 .hero-content{position:absolute;inset:0;display:grid;place-items:center}
-.btn{display:inline-block;background:#2f4639;color:#fff;padding:.75rem 1.25rem;border-radius:999px;text-decoration:none;font-weight:700}
-.btn:hover{background:#8b5a35}
+
+/* =========================
+   Buttons
+   ========================= */
+.btn{
+  display:inline-block;background:#2f4639;color:#fff;
+  padding:.75rem 1.25rem;border-radius:999px;text-decoration:none;font-weight:700;
+  transition:transform .18s ease, box-shadow .18s ease, filter .18s ease;
+}
+.btn:hover,
+.btn:focus-visible{
+  transform:translateY(-2px);
+  box-shadow:0 6px 16px rgba(0,0,0,.22);
+  filter:brightness(1.04);
+}
+.btn:active{ transform:translateY(0); box-shadow:0 2px 6px rgba(0,0,0,.20) }
+.btn:focus-visible{ outline:2px solid rgba(255,255,255,.9); outline-offset:2px }
+
 /* spacing for in-page anchors so the sticky header doesn't cover them */
-[id]{ scroll-margin-top: 80px; }
+[id]{ scroll-margin-top:80px }
 
 /* Bigger hero tagline */
-.hero .tagline--big {
-  font-size: clamp(1.25rem, 2.6vw + 0.4rem, 2.2rem);
-  font-weight: 700;
-  line-height: 1.25;
-  color: #fff;
-  text-shadow: 0 2px 12px rgba(0,0,0,.55);
-  margin: 0 0 1rem;
-  max-width: 42rem;
+.hero .tagline--big{
+  font-size:clamp(1.25rem,2.6vw + .4rem,2.2rem);
+  font-weight:700; line-height:1.25; color:#fff;
+  text-shadow:0 2px 12px rgba(0,0,0,.55);
+  margin:0 0 1rem; max-width:42rem;
 }
 
 /* Hide visually but keep for screen readers/SEO */
-.visually-hidden {
-  position: absolute !important;
-  height: 1px; width: 1px;
-  overflow: hidden;
-  clip: rect(1px, 1px, 1px, 1px);
-  white-space: nowrap;
+.visually-hidden{
+  position:absolute !important; height:1px; width:1px;
+  overflow:hidden; clip:rect(1px,1px,1px,1px); white-space:nowrap;
 }
 
-/* Sections */
-section{ padding: 56px 0; }
+/* =========================
+   Sections
+   ========================= */
+section{padding:56px 0}
 .section-title{
-  font-family: Merriweather, Georgia, serif;
-  color:#2f4639; text-align:center;
-  margin:0 0 16px;
-  font-size: clamp(22px, 3vw, 32px);
+  font-family:Merriweather, Georgia, serif;
+  color:#2f4639; text-align:center; margin:0 0 16px;
+  font-size:clamp(22px,3vw,32px);
 }
-.lead{ color:#6b7280; text-align:center; max-width:60ch; margin:0 auto 32px; }
+.lead{color:#6b7280;text-align:center;max-width:60ch;margin:0 auto 32px}
 
 /* About */
-.about-grid{
-  display:grid; grid-template-columns: 1.05fr .95fr;
-  gap: 24px; align-items:center;
-}
-@media (max-width:900px){ .about-grid{ grid-template-columns:1fr; } }
-.card{ background:#f6f7f5; padding:16px; border-radius:14px; }
-.card img{ width:100%; height:auto; display:block; border-radius:12px; }
+.about-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:24px;align-items:center}
+@media (max-width:900px){ .about-grid{grid-template-columns:1fr} }
+.card{background:#f6f7f5;padding:16px;border-radius:14px}
+.card img{width:100%;height:auto;display:block;border-radius:12px}
 
-/* Gallery */
-.gallery{ background:#22302a; color:#e7ece8; }
-.grid-photos{ display:grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap:12px; }
-.grid-photos img{ width:100%; height:230px; object-fit:cover; display:block; border-radius:12px; transition:transform .2s ease; cursor:pointer; }
-.grid-photos img:hover{ transform:scale(1.05); }
+/* (Removed the negative pull-up that caused overlap) */
+/* #about { margin-top:-24px } */
 
-.lightbox{ position:fixed; inset:0; background:rgba(0,0,0,.6); backdrop-filter:blur(4px); display:flex; align-items:center; justify-content:center; z-index:1000; }
-.lightbox.hidden{ display:none; }
-.lightbox img{ max-width:90vw; max-height:90vh; border-radius:12px; }
+/* =========================
+   Gallery
+   ========================= */
+.gallery{background:#22302a;color:#e7ece8}
+.grid-photos{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.grid-photos img{width:100%;height:230px;object-fit:cover;display:block;border-radius:12px;transition:transform .2s ease;cursor:pointer}
+.grid-photos img:hover{transform:scale(1.05)}
 
-/* Amenities */
-.amenities{ background:#f6f7f5; }
-.amen-list{ list-style:none; display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap:12px; padding:0; margin:16px 0 0; }
-.amen-item{ background:#fff; border:1px solid #eef1ee; padding:12px 14px; border-radius:12px; display:flex; align-items:center; gap:8px; }
-.amen-ic{ font-size:1.2rem; }
+.lightbox{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;z-index:1000}
+.lightbox.hidden{display:none}
+.lightbox img{max-width:90vw;max-height:90vh;border-radius:12px}
 
-/* CTA */
-.cta{ background:#2f4639; color:#fff; text-align:center; }
-.cta .lead{ color:#e8eee9; }
+/* =========================
+   Amenities
+   ========================= */
+.amenities{background:#f6f7f5}
+.amen-list{list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;padding:0;margin:16px 0 0}
+.amen-item{background:#fff;border:1px solid #eef1ee;padding:12px 14px;border-radius:12px;display:flex;align-items:center;gap:8px}
+.amen-ic{font-size:1.2rem}
 
-/* CTA subtext styling (revised for better spacing) */
-.cta-subtext {
-  font-size: 1rem;
-  color: #e8eee9;
-  margin-top: 1.2rem;    /* more space below header */
-  margin-bottom: 2.2rem; /* more space above button */
-  line-height: 1.5;
-  max-width: 48ch;
-  margin-left: auto;
-  margin-right: auto;
-  font-weight: 400;      /* lighter weight for secondary feel */
-  opacity: 0.95;         /* softens contrast slightly */
+/* =========================
+   CTA
+   ========================= */
+.cta{background:#2f4639;color:#fff;text-align:center}
+.cta .lead{color:#e8eee9}
+
+/* CTA subtext styling */
+.cta-subtext{
+  font-size:1rem;color:#e8eee9;margin-top:1.2rem;margin-bottom:2.2rem;line-height:1.5;
+  max-width:48ch;margin-left:auto;margin-right:auto;font-weight:400;opacity:.95
 }
 
-/* Hero copy offsets */
-@media (max-width: 767px) {      /* phones */
-  .hero .hero-content { transform: translateY(28vh); }
-  .hero .tagline.tagline--big { max-width: 26ch; }
+/* CTA button: always-visible brown + hover lift */
+.cta .btn{
+  background-color:#8B4513; color:#fff; border:0;
+  box-shadow:0 2px 6px rgba(0,0,0,.25);
 }
-
-@media (max-width: 375px) {      /* extra small phones */
-  .hero .hero-content { transform: translateY(30vh); }
-}
-
-@media (min-width: 768px) {      /* tablets */
-  .hero .hero-content { transform: translateY(18vh); }
-}
-
-@media (min-width: 1024px) {     /* laptops/desktops */
-  .hero .hero-content { transform: translateY(22vh); }
-}
-/* CTA button: always-visible brown */
-.cta .btn {
-  background-color: #8B4513;      /* Saddle Brown */
-  color: #fff;
-  border: 0;
-  box-shadow: 0 2px 6px rgba(0,0,0,.25);
-}
-
 .cta .btn:hover,
-.cta .btn:focus-visible {
-  background-color: #A0522D;      /* Sienna (lighter) */
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0,0,0,.30);
+.cta .btn:focus-visible{
+  background-color:#A0522D; transform:translateY(-2px);
+  box-shadow:0 4px 12px rgba(0,0,0,.30);
 }
+.cta .btn:focus-visible{ outline:2px solid #fff; outline-offset:2px }
 
-/* good keyboard outline */
-.cta .btn:focus-visible {
-  outline: 2px solid #fff;
-  outline-offset: 2px;
+/* =========================
+   Hero copy offsets (place line between TV & table)
+   ========================= */
+@media (max-width:767px){      /* phones */
+  .hero .hero-content{ transform:translateY(28vh) }
+  .hero .tagline.tagline--big{ max-width:26ch }
 }
-/* Universal button hover: subtle lift + glow, keep original colors */
-.btn {
-  transition: transform .18s ease, box-shadow .18s ease, filter .18s ease;
+@media (max-width:375px){      /* extra small phones */
+  .hero .hero-content{ transform:translateY(30vh) }
 }
-
-.btn:hover,
-.btn:focus-visible {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0,0,0,.22);
-  filter: brightness(1.04); /* light “highlight”, keeps color tone */
+@media (min-width:768px){      /* tablets */
+  .hero .hero-content{ transform:translateY(18vh) }
 }
-
-.btn:active {
-  transform: translateY(0);
-  box-shadow: 0 2px 6px rgba(0,0,0,.20);
-}
-
-/* good keyboard outline */
-.btn:focus-visible { outline: 2px solid rgba(255,255,255,.9); outline-offset: 2px; }
-
-/* Text logo styles */
-.site-header .brand {
-  display: flex;
-  align-items: center;
-  gap: 0;
-  text-decoration: none;
-}
-
-.site-header .brand .brand-text {
-  font-family: "Merriweather", serif;
-  font-weight: 900;
-  font-size: clamp(1.15rem, 2.2vw + 0.35rem, 1.9rem);
-  line-height: 1.1;
-  letter-spacing: 0.01em;
-  color: #213529; /* deep forest */
-  white-space: nowrap;
-  transform: translateY(-1px); /* tiny optical nudge */
-}
-
-/* Safety: in case an old logo <img> is still around, hide it */
-.site-header .brand img { display: none !important; }
-
-/* Prevent header wrap on very narrow phones */
-@media (max-width: 380px) {
-  .site-header .brand .brand-text { font-size: 1.35rem; }
+@media (min-width:1024px){     /* laptops/desktops */
+  .hero .hero-content{ transform:translateY(22vh) }
 }
