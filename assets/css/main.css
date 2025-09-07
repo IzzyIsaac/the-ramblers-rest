@@ -362,7 +362,7 @@ section {
 /* Hero copy offsets */
 @media (max-width: 767px) {
   .hero-content {
-    transform: translateY(28vh);
+    transform: translateY(18vh);
   }
 
   .hero .tagline--big {
@@ -372,7 +372,7 @@ section {
 
 @media (max-width: 375px) {
   .hero-content {
-    transform: translateY(30vh);
+    transform: translateY(18vh);
   }
 }
 
