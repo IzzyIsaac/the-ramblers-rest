@@ -51,6 +51,11 @@ body {
   display: block;
 }
 
+.brand-logo {
+  height: var(--logo-h);
+  width: auto; /* Allow the browser to calculate width to maintain aspect ratio */
+}
+
 .brand .brand-text {
   display: none;
 }
@@ -385,5 +390,15 @@ section {
 @media (min-width: 1024px) {
   .hero-content {
     transform: translateY(22vh);
+  }
+}
+
+@media (max-width: 600px) {
+  nav .btn {
+    background: none;
+    padding: .5rem 1rem;
+    font-size: 1rem;
+    color: #2f4639;
+    font-weight: 600;
   }
 }
