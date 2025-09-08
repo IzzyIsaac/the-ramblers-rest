@@ -392,13 +392,3 @@ section {
     transform: translateY(22vh);
   }
 }
-
-@media (max-width: 600px) {
-  nav .btn {
-    background: none;
-    padding: .5rem 1rem;
-    font-size: 1rem;
-    color: #2f4639;
-    font-weight: 600;
-  }
-}
