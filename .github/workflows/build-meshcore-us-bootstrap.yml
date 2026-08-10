@@ -1,0 +1,80 @@
+name: Build MeshCore US bootstrap firmware
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/build-meshcore-us-bootstrap.yml'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout helper repo
+        uses: actions/checkout@v4
+
+      - name: Install PlatformIO
+        run: python -m pip install --upgrade platformio
+
+      - name: Clone upstream MeshCore
+        run: git clone --depth 1 https://github.com/meshcore-dev/MeshCore.git MeshCore
+
+      - name: Patch bootstrap radio settings
+        shell: python
+        run: |
+          from pathlib import Path
+          p = Path('MeshCore/examples/simple_repeater/MyMesh.cpp')
+          s = p.read_text()
+          needle = '''  // load persisted prefs\n  _cli.loadPrefs(_fs);\n'''
+          replacement = '''  // load persisted prefs\n  _cli.loadPrefs(_fs);\n\n  // One-time bootstrap build for ESP32 nodes whose USB port is unavailable.\n  // Force the current USA/Canada recommended MeshCore narrow preset AFTER\n  // loading any old application prefs, then persist it so later stock OTA\n  // repeater firmware keeps the same radio settings.\n  _prefs.freq = 910.525f;\n  _prefs.bw = 62.5f;\n  _prefs.sf = 7;\n  _prefs.cr = 5;\n  StrHelper::strncpy(_prefs.password, "password", sizeof(_prefs.password));\n  _cli.savePrefs(_fs);\n'''
+          if needle not in s:
+              raise SystemExit('Expected MyMesh::begin preference-load block not found; upstream changed')
+          p.write_text(s.replace(needle, replacement, 1))
+
+      - name: Also set compile-time fresh-install defaults
+        shell: python
+        run: |
+          from pathlib import Path
+          p = Path('MeshCore/variants/heltec_v4/platformio.ini')
+          s = p.read_text()
+          marker = '[env:heltec_v4_repeater]\n'
+          if marker not in s:
+              raise SystemExit('heltec_v4_repeater environment not found')
+          block = '''[env:heltec_v4_repeater]\n'''
+          replacement = '''[env:heltec_v4_repeater]\n'''
+          # Add to the environment's build_flags immediately after inherited flags.
+          old = '''[env:heltec_v4_repeater]\nextends = heltec_v4_oled\nbuild_flags =\n  ${heltec_v4_oled.build_flags}\n'''
+          new = '''[env:heltec_v4_repeater]\nextends = heltec_v4_oled\nbuild_flags =\n  ${heltec_v4_oled.build_flags}\n  -D LORA_FREQ=910.525\n  -D LORA_BW=62.5\n  -D LORA_SF=7\n  -D LORA_CR=5\n'''
+          if old not in s:
+              raise SystemExit('Expected Heltec V4 repeater build_flags block not found; upstream changed')
+          p.write_text(s.replace(old, new, 1))
+
+      - name: Record upstream revision and patch
+        run: |
+          cd MeshCore
+          git rev-parse HEAD > ../UPSTREAM_COMMIT.txt
+          git diff > ../BOOTSTRAP_PATCH.diff
+
+      - name: Build Heltec V4 repeater application
+        working-directory: MeshCore
+        run: pio run -e heltec_v4_repeater
+
+      - name: Build merged image for archival/USB recovery only
+        working-directory: MeshCore
+        run: pio run -e heltec_v4_repeater -t mergebin
+
+      - name: Collect outputs
+        run: |
+          mkdir -p out
+          cp MeshCore/.pio/build/heltec_v4_repeater/firmware.bin out/Heltec_v4_repeater-US-CAN-bootstrap-OTA.bin
+          cp MeshCore/.pio/build/heltec_v4_repeater/firmware-merged.bin out/Heltec_v4_repeater-US-CAN-bootstrap-MERGED-USB-ONLY.bin
+          cp UPSTREAM_COMMIT.txt BOOTSTRAP_PATCH.diff out/
+          sha256sum out/*.bin > out/SHA256SUMS.txt
+          ls -lh out
+
+      - name: Upload firmware artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: meshcore-heltec-v4-us-bootstrap
+          path: out/
+          retention-days: 30
