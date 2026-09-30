@@ -74,10 +74,11 @@
 
     document.querySelectorAll("#gallery .grid-photos img").forEach((img) => {
       img.addEventListener("click", () => {
-        const file = (img.currentSrc || img.src || "").split("/").pop() || "";
+        const full = img.dataset.full || img.currentSrc || img.src;
+        const file = full.split("/").pop() || "";
         track("gallery_click", { image: file.toLowerCase() });
         if (lightbox) {
-          lightbox.innerHTML = `<img src="${img.currentSrc || img.src}" alt="${img.alt}">`;
+          lightbox.innerHTML = `<img src="${full}" alt="${img.alt}">`;
           lightbox.classList.remove("hidden");
           document.body.style.overflow = "hidden";
         }
